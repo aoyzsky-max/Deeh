@@ -96,7 +96,7 @@ const nextConfig = {
       },
     ];
   },
-  // For Vercel deployment with yt-dlp
+  // Webpack configuration
   webpack: (config, { isServer }) => {
     if (isServer) {
       config.externals = [...(config.externals || []), 'yt-dlp-wrap'];
