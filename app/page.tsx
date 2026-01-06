@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -53,7 +52,10 @@ export default function Home() {
     setVideoInfo(null)
 
     try {
-      const response = await axios.post("/api/video/info", { url })
+      // Use local server if configured, otherwise use Vercel API route
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
+      const endpoint = apiUrl ? `${apiUrl}/api/video/info` : '/api/video/info'
+      const response = await axios.post(endpoint, { url })
       setVideoInfo(response.data)
       toast.success("Video information loaded successfully")
     } catch (error: any) {
@@ -70,15 +72,14 @@ export default function Home() {
 
     setDownloading(formatId)
     try {
-      const downloadUrl = `/api/video/download?url=${encodeURIComponent(url)}&format_id=${formatId}`
+      // Use local server if configured, otherwise use Vercel API route
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
+      const downloadUrl = apiUrl 
+        ? `${apiUrl}/api/video/download?url=${encodeURIComponent(url)}&format_id=${formatId}`
+        : `/api/video/download?url=${encodeURIComponent(url)}&format_id=${formatId}`
       
-      // Create a temporary link and trigger download
-      const link = document.createElement("a")
-      link.href = downloadUrl
-      link.download = `${videoInfo.title}.mp4`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
+      // Open in new window for streaming downloads
+      window.open(downloadUrl, '_blank')
 
       toast.success("Download started")
     } catch (error: any) {
@@ -187,7 +188,7 @@ export default function Home() {
               <div className="text-left space-y-2 text-sm text-muted-foreground">
                 <p>1. Copy the video URL from any supported platform</p>
                 <p>2. Paste it in the input field above</p>
-                <p>3. Click &quot;Detect &amp; Load&quot; to see available formats</p>
+                <p>3. Click "Detect & Load" to see available formats</p>
                 <p>4. Choose your preferred quality and click download</p>
                 <p className="mt-4 font-medium">Supported platforms: YouTube, TikTok, Instagram, Facebook, Twitter/X, Reddit</p>
               </div>
@@ -201,11 +202,9 @@ export default function Home() {
             <CardHeader>
               <div className="flex items-start gap-4">
                 {videoInfo.thumbnail && (
-                  <Image
+                  <img
                     src={videoInfo.thumbnail}
                     alt={videoInfo.title}
-                    width={192}
-                    height={128}
                     className="w-48 h-32 object-cover rounded-lg"
                   />
                 )}
