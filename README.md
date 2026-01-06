@@ -46,7 +46,13 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ## Deployment
 
-Deploy to Vercel or any Node.js hosting platform. Note: yt-dlp binary execution may require special configuration on serverless platforms.
+### Deploy to Vercel
+
+1. Push your code to GitHub
+2. Import your repository in [Vercel](https://vercel.com)
+3. Deploy automatically
+
+**Note**: Video download functionality requires yt-dlp, which cannot run on Vercel's serverless functions. The API routes will need to be configured to work with an external service or alternative hosting solution.
 
 ## License
 
