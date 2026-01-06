@@ -5,6 +5,9 @@ import { detectPlatform, validateUrl, sanitizeUrl } from '@/lib/platform-detecto
 import path from 'path';
 import fs from 'fs';
 
+// Force dynamic rendering for this API route
+export const dynamic = 'force-dynamic';
+
 const execAsync = promisify(exec);
 
 interface VideoInfo {
