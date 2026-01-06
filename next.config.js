@@ -1,6 +1,43 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Allow external images from video platforms
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.ytimg.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.tiktokcdn.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.cdninstagram.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.fbcdn.net',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.twimg.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.redd.it',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.redditmedia.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.dailymotion.com',
+      },
+    ],
+  },
   // Increase timeout for API routes that process videos
   experimental: {
     serverActions: {

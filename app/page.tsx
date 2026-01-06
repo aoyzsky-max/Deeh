@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -184,11 +185,12 @@ export default function Home() {
               <CardHeader>
                 <div className="flex items-start gap-4">
                   {videoInfo.thumbnail && (
-                    <img
+                    <Image
                       src={videoInfo.thumbnail}
                       alt={videoInfo.title}
+                      width={192}
+                      height={128}
                       className="w-48 h-32 object-cover rounded-lg"
-                      loading="lazy"
                     />
                   )}
                   <div className="flex-1">

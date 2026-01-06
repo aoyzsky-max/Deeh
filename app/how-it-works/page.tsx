@@ -84,7 +84,7 @@ export default function HowItWorksPage() {
           <Card>
             <CardContent className="pt-6">
               <p className="text-lg sm:text-xl mb-4">
-                That's it! Simple as that!
+                That&apos;s it! Simple as that!
               </p>
               <Link href="/">
                 <Button size="lg">
