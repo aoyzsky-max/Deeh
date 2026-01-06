@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+.gitignore
+*.md
+.env
+.env.local
+.vercel
+.DS_Store
+yt-dlp
+yt-dlp.exe
+local-server
+
