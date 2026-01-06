@@ -46,7 +46,39 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ## Deployment
 
-Deploy to Vercel or any Node.js hosting platform. Note: yt-dlp binary execution may require special configuration on serverless platforms.
+### ⚠️ Important: Vercel Limitation
+
+**This application uses `yt-dlp`, which cannot run on Vercel's serverless functions.** Vercel's serverless environment does not support executing binary executables like `yt-dlp`.
+
+### Deployment Options
+
+1. **Alternative Hosting Platforms** (Recommended):
+   - **Railway** - Supports Docker containers with yt-dlp
+   - **Render** - Supports Docker containers
+   - **Fly.io** - Supports Docker containers
+   - **DigitalOcean App Platform** - Supports Docker containers
+   - **VPS** (DigitalOcean, AWS EC2, etc.) - Full control
+
+2. **Hybrid Approach**:
+   - Deploy Next.js frontend to Vercel
+   - Deploy a separate backend API service (with yt-dlp) to a platform that supports binaries
+   - Update API routes to call the external backend service
+
+3. **For Vercel Deployment** (Limited Functionality):
+   - The code attempts to redirect to direct video URLs when `process.env.VERCEL` is detected
+   - However, this still requires yt-dlp to be available, which won't work on Vercel
+   - You would need to refactor to use a third-party API service instead
+
+### Recommended: Railway Deployment
+
+Railway is the easiest option for this app:
+
+1. Create a `Dockerfile` in your project root
+2. Push to GitHub
+3. Connect Railway to your GitHub repo
+4. Railway will automatically detect and deploy
+
+See Railway's documentation for Docker deployment.
 
 ## License
 
