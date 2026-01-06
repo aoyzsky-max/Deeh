@@ -20,28 +20,21 @@ RUN yt-dlp --version
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
-
-# Remove package-lock.json if it exists to avoid conflicts
-RUN rm -f package-lock.json
+COPY package.json ./
 
 # Install Node.js dependencies
-# Use --legacy-peer-deps to handle any peer dependency conflicts
-RUN npm install --legacy-peer-deps
+RUN npm install --production
 
 # Copy application files
-COPY . .
+COPY server.js ./
 
-# Build Next.js application
-RUN npm run build
+# Expose port (Railway will set PORT env var)
+EXPOSE 3001
 
-# Expose port
-EXPOSE 3000
-
-# Set environment variable
+# Set default port (Railway will override with PORT env var)
+ENV PORT=3001
 ENV NODE_ENV=production
-ENV PORT=3000
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
 

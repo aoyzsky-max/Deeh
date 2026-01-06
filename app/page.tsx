@@ -52,10 +52,7 @@ export default function Home() {
     setVideoInfo(null)
 
     try {
-      // Use local server if configured, otherwise use Vercel API route
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
-      const endpoint = apiUrl ? `${apiUrl}/api/video/info` : '/api/video/info'
-      const response = await axios.post(endpoint, { url })
+      const response = await axios.post("/api/video/info", { url })
       setVideoInfo(response.data)
       toast.success("Video information loaded successfully")
     } catch (error: any) {
@@ -72,14 +69,15 @@ export default function Home() {
 
     setDownloading(formatId)
     try {
-      // Use local server if configured, otherwise use Vercel API route
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
-      const downloadUrl = apiUrl 
-        ? `${apiUrl}/api/video/download?url=${encodeURIComponent(url)}&format_id=${formatId}`
-        : `/api/video/download?url=${encodeURIComponent(url)}&format_id=${formatId}`
+      const downloadUrl = `/api/video/download?url=${encodeURIComponent(url)}&format_id=${formatId}`
       
-      // Open in new window for streaming downloads
-      window.open(downloadUrl, '_blank')
+      // Create a temporary link and trigger download
+      const link = document.createElement("a")
+      link.href = downloadUrl
+      link.download = `${videoInfo.title}.mp4`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
 
       toast.success("Download started")
     } catch (error: any) {
